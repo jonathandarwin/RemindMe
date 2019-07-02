@@ -15,6 +15,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.MotionEvent;
 import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Toast;
 
 import com.example.remindme.factory.ViewModelFactory;
 
@@ -83,5 +84,13 @@ public class BaseActivity<DataBinding extends ViewDataBinding, VM extends ViewMo
         builder.setTitle(title);
         builder.setMessage(message);
         return builder;
+    }
+
+    protected void successToast(){
+        Toast.makeText(this, "Success", Toast.LENGTH_SHORT).show();
+    }
+
+    protected void errorToast(){
+        Toast.makeText(this, "Error. Please try again", Toast.LENGTH_SHORT).show();
     }
 }

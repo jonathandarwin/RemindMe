@@ -1,5 +1,6 @@
 package com.example.remindme.repository;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -48,11 +49,47 @@ public class ScheduleRepository extends SQLiteOpenHelper {
                         .setIsOn(cursor.getInt(cursor.getColumnIndex("isOn"))));
                 cursor.moveToNext();
             }
+            db.close();
         }
         catch (Exception e){
             e.printStackTrace();
+            db.close();
             listSchedule = new ArrayList<>();
         }
         return listSchedule;
+    }
+
+    public boolean insertSchedule(Schedule schedule){
+        SQLiteDatabase db = getWritableDatabase();
+        try{
+            ContentValues value = new ContentValues();
+            value.put("time", schedule.getTime());
+            value.put("description", schedule.getDescription());
+            value.put("isOn", 1);
+
+            db.insert("msSchedule", null, value);
+            db.close();
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            db.close();
+            return false;
+        }
+        return true;
+    }
+
+    public boolean deleteSchedule(int id){
+        SQLiteDatabase db = getWritableDatabase();
+        try{
+            String query = "DELETE FROM msSchedule WHERE id = " + id;
+            db.execSQL(query);
+            db.close();
+        }
+        catch(Exception e){
+            e.printStackTrace();
+            db.close();
+            return false;
+        }
+        return true;
     }
 }

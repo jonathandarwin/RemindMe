@@ -26,7 +26,6 @@ public class HomeActivity extends BaseActivity<HomeActivityBinding, HomeViewMode
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getListSchedule();
     }
 
     @Override
@@ -37,7 +36,14 @@ public class HomeActivity extends BaseActivity<HomeActivityBinding, HomeViewMode
     @Override
     protected void setAdapter() {
         listSchedule = new ArrayList<>();
-        adapter = new HomeAdapter(this, listSchedule, R.layout.list_schedule_item);
+        adapter = new HomeAdapter(this, listSchedule, R.layout.list_schedule_item, new onScheduleClick() {
+            @Override
+            public void onClick(Schedule schedule) {
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("schedule", schedule);
+                gotoIntent(InsertActivity.class, bundle, false);
+            }
+        });
         getBinding().recyclerView.setLayoutManager(new LinearLayoutManager(this));
         getBinding().recyclerView.setHasFixedSize(true);
         getBinding().recyclerView.setAdapter(adapter);
@@ -50,6 +56,12 @@ public class HomeActivity extends BaseActivity<HomeActivityBinding, HomeViewMode
         }
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getListSchedule();
+    }
+
     private void getListSchedule(){
         getBinding().noData.setVisibility(View.GONE);
         listSchedule.clear();
@@ -58,5 +70,9 @@ public class HomeActivity extends BaseActivity<HomeActivityBinding, HomeViewMode
             getBinding().noData.setVisibility(View.VISIBLE);
         }
         adapter.notifyDataSetChanged();
+    }
+
+    public interface onScheduleClick{
+        void onClick(Schedule schedule);
     }
 }

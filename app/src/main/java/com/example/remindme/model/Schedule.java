@@ -5,7 +5,9 @@ import android.databinding.Bindable;
 
 import com.example.remindme.BR;
 
-public class Schedule extends BaseObservable {
+import java.io.Serializable;
+
+public class Schedule extends BaseObservable implements Serializable {
     protected int id;
     protected String time;
     protected String description;
