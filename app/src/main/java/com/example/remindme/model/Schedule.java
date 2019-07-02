@@ -56,4 +56,9 @@ public class Schedule extends BaseObservable implements Serializable {
         notifyPropertyChanged(BR.isOn);
         return this;
     }
+
+    @Bindable
+    public boolean getDisplayIsOn(){
+        return getIsOn() == 1 ? true : false;
+    }
 }

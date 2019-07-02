@@ -1,16 +1,22 @@
 package com.example.remindme.app.insert;
 
+import android.app.TimePickerDialog;
 import android.content.DialogInterface;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.example.remindme.R;
 import com.example.remindme.base.BaseActivity;
 import com.example.remindme.databinding.InsertActivityBinding;
 import com.example.remindme.model.Schedule;
+
+import java.util.Calendar;
 
 public class InsertActivity extends BaseActivity<InsertActivityBinding, InsertViewModel>
             implements View.OnClickListener{
@@ -40,6 +46,7 @@ public class InsertActivity extends BaseActivity<InsertActivityBinding, InsertVi
         getBinding().btnSave.setOnClickListener(this);
         getBinding().btnCancel.setOnClickListener(this);
         getBinding().txtDelete.setOnClickListener(this);
+        getBinding().txtTime.setOnClickListener(this);
     }
 
     @Override
@@ -79,6 +86,24 @@ public class InsertActivity extends BaseActivity<InsertActivityBinding, InsertVi
             });
             dialog.setNegativeButton("No", null);
             dialog.show();
+        }
+        else if (v.equals(getBinding().txtTime)){
+            try{
+                String currTime = getBinding().txtTime.getText().toString();
+                int hour = Integer.parseInt(currTime.substring(0,2));
+                int minute = Integer.parseInt(currTime.substring(3,5));
+                TimePickerDialog dialog = new TimePickerDialog(InsertActivity.this, new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                        String time = String.format("%02d", hourOfDay)+ ":" + String.format("%02d", minute);
+                        getBinding().txtTime.setText(time);
+                    }
+                }, hour, minute, true);
+                dialog.show();
+            }
+            catch (Exception e){
+                e.printStackTrace();
+            }
         }
     }
 }
