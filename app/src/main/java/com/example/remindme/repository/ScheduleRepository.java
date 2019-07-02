@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import com.example.remindme.model.Schedule;
 
+import java.sql.SQLData;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -86,6 +87,26 @@ public class ScheduleRepository extends SQLiteOpenHelper {
             db.close();
         }
         catch(Exception e){
+            e.printStackTrace();
+            db.close();
+            return false;
+        }
+        return true;
+    }
+
+    public boolean updateSchedule(Schedule schedule){
+        SQLiteDatabase db = getWritableDatabase();
+        try{
+            String query = "UPDATE msSchedule SET" +
+                    "time = \"" + schedule.getTime() + "\"," +
+                    "description = \"" +  schedule.getDescription()+ "\"," +
+                    "isOn = " + schedule.getIsOn() +
+                    "WHERE id = " + schedule.getId();
+
+            db.execSQL(query);
+            db.close();
+        }
+        catch (Exception e){
             e.printStackTrace();
             db.close();
             return false;

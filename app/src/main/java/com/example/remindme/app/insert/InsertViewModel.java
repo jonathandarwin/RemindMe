@@ -28,4 +28,8 @@ public class InsertViewModel extends ViewModel {
     public boolean deleteSchedule(int id){
         return repo.deleteSchedule(id);
     }
+
+    public boolean updateSchedule(Schedule schedule){
+        return repo.updateSchedule(schedule);
+    }
 }
