@@ -67,7 +67,7 @@
                 >
 
                 <Switch
-                    android:id="@+id/switch"
+                    android:id="@+id/switchOn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:checked="@{viewModel.displayIsOn}"

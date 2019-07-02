@@ -17,6 +17,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".app.insert.InsertActivity"/>
+        <receiver android:name=".service.Notification"/>
     </application>
 
 </manifest>

@@ -1,12 +1,18 @@
 package com.example.remindme.app.insert;
 
+import android.app.AlarmManager;
+import android.app.Notification;
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.View;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -57,8 +63,18 @@ public class InsertActivity extends BaseActivity<InsertActivityBinding, InsertVi
         else if (v.equals(getBinding().btnSave)){
             Schedule schedule = getBinding().getViewModel();
             if(getViewModel().validateInput(schedule)){
-                boolean result = getViewModel().insertSchedule(schedule);
+                boolean result = false;
+                if(schedule.getId() == 0){
+                    // INSERT
+                    result = getViewModel().insertSchedule(schedule);
+                }
+                else{
+                    // UPDATE
+                    result = getViewModel().updateSchedule(schedule);
+                }
+
                 if(result){
+                    getViewModel().setAlarm(schedule);
                     successToast();
                     finish();
                 }

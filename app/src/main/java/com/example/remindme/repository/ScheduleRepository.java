@@ -33,6 +33,32 @@ public class ScheduleRepository extends SQLiteOpenHelper {
 
     }
 
+    public Schedule getScheduleById(int id){
+        SQLiteDatabase db = getWritableDatabase();
+        Schedule schedule = new Schedule();
+        try{
+            String query = "SELECT * FROM msSchedule WHERE id = " + id;
+            Cursor cursor = db.rawQuery(query, null);
+
+            cursor.moveToFirst();
+
+            while(!cursor.isAfterLast()){
+                schedule.setId(id);
+                schedule.setTime(cursor.getString(cursor.getColumnIndex("time")));
+                schedule.setDescription(cursor.getString(cursor.getColumnIndex("description")));
+                schedule.setIsOn(cursor.getInt(cursor.getColumnIndex("isOn")));
+                break;
+            }
+            db.close();
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            db.close();
+            schedule = new Schedule();
+        }
+        return schedule;
+    }
+
     public List<Schedule> getListSchedule(){
         SQLiteDatabase db = getWritableDatabase();
         List<Schedule> listSchedule = new ArrayList<>();
