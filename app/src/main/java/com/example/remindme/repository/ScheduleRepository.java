@@ -86,23 +86,24 @@ public class ScheduleRepository extends SQLiteOpenHelper {
         return listSchedule;
     }
 
-    public boolean insertSchedule(Schedule schedule){
+    public long insertSchedule(Schedule schedule){
         SQLiteDatabase db = getWritableDatabase();
+        long id = -1;
         try{
             ContentValues value = new ContentValues();
             value.put("time", schedule.getTime());
             value.put("description", schedule.getDescription());
             value.put("isOn", 1);
 
-            db.insert("msSchedule", null, value);
+            id = db.insert("msSchedule", null, value);
             db.close();
         }
         catch (Exception e){
             e.printStackTrace();
+            id = -1;
             db.close();
-            return false;
         }
-        return true;
+        return id;
     }
 
     public boolean deleteSchedule(int id){
@@ -123,11 +124,11 @@ public class ScheduleRepository extends SQLiteOpenHelper {
     public boolean updateSchedule(Schedule schedule){
         SQLiteDatabase db = getWritableDatabase();
         try{
-            String query = "UPDATE msSchedule SET" +
+            String query = "UPDATE msSchedule SET " +
                     "time = \"" + schedule.getTime() + "\"," +
                     "description = \"" +  schedule.getDescription()+ "\"," +
                     "isOn = " + schedule.getIsOn() +
-                    "WHERE id = " + schedule.getId();
+                    " WHERE id = " + schedule.getId();
 
             db.execSQL(query);
             db.close();

@@ -1,18 +1,23 @@
 package com.example.remindme.app.insert;
 
 import android.app.AlarmManager;
-import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.arch.lifecycle.ViewModel;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Build;
 import android.util.Log;
 
 import com.example.remindme.model.Schedule;
 import com.example.remindme.repository.ScheduleRepository;
+import com.example.remindme.service.Notification;
 
 import java.util.Calendar;
+
+import static android.content.Context.NOTIFICATION_SERVICE;
 
 public class InsertViewModel extends ViewModel {
 
@@ -25,7 +30,12 @@ public class InsertViewModel extends ViewModel {
     }
 
     public boolean insertSchedule(Schedule schedule){
-        return repo.insertSchedule(schedule);
+        long id = repo.insertSchedule(schedule);
+        if(id != -1){
+            schedule.setId((int) id);
+            return true;
+        }
+        return false;
     }
 
     public boolean validateInput(Schedule schedule){
@@ -63,6 +73,26 @@ public class InsertViewModel extends ViewModel {
                 PendingIntent.FLAG_UPDATE_CURRENT
         );
         alarm.setRepeating(AlarmManager.RTC_WAKEUP, time, AlarmManager.INTERVAL_DAY, pending);
-        Log.d("masuksiniga", "notif successfully created");
+        createNotificationChannel();
+    }
+
+    private void createNotificationChannel()
+    {
+        NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
+
+        if(Build.VERSION.SDK_INT >=
+                android.os.Build.VERSION_CODES.O){
+            NotificationChannel notificationChannel = new NotificationChannel(
+                    "PRIMARY",
+                    "stand up notification",
+                    NotificationManager.IMPORTANCE_HIGH
+            );
+
+            notificationChannel.enableLights(true);
+            notificationChannel.setLightColor(Color.RED);
+            notificationChannel.enableVibration(true);
+            notificationChannel.setDescription("description");
+            mNotificationManager.createNotificationChannel(notificationChannel);
+        }
     }
 }

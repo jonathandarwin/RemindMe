@@ -3,6 +3,7 @@ package com.example.remindme.app.home;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 
 import com.example.remindme.base.BaseAdapter;
@@ -27,6 +28,7 @@ public class HomeAdapter extends BaseAdapter<ListScheduleItemBinding, Schedule> 
     @Override
     public void onBindViewHolder(@NonNull BaseAdapter.ViewHolder viewHolder, final int i) {
         super.onBindViewHolder(viewHolder, i);
+        Log.d("masuksiniga", "description : " + listSchedule.get(i).getDescription() + " id : " + Integer.toString(listSchedule.get(i).getId()));
         ((ListScheduleItemBinding) viewHolder.binding).setViewModel(listSchedule.get(i));
         ((ListScheduleItemBinding) viewHolder.binding).llSchedule.setOnClickListener(new View.OnClickListener() {
             @Override
