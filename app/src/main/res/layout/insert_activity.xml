@@ -79,6 +79,8 @@
                 android:hint="Description"
                 android:inputType="text"
                 android:maxLength="20"
+                android:backgroundTint="@color/colorPrimary"
+                android:textCursorDrawable="@null"
                 />
 
             <Button

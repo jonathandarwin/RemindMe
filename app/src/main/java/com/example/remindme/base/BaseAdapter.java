@@ -46,4 +46,6 @@ public class BaseAdapter<DataBinding extends ViewDataBinding, Model extends Base
     public int getItemCount() {
         return listModel.size();
     }
+
+
 }

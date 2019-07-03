@@ -20,13 +20,10 @@ public class Notification extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         Schedule schedule = (Schedule) intent.getSerializableExtra("schedule");
-        Log.d("masuksiniga", "id notif : " + Integer.toString(schedule.getId()));
         repo = new ScheduleRepository(context);
         schedule = repo.getScheduleById(schedule.getId());
-        Log.d("masuksiniga","description schedule : " + schedule.getDescription());
-        if(schedule.getId() != 0){
+        if(schedule.getId() != 0 && schedule.getIsOn() == 1){
             // NOTIF
-            Log.d("masuksiniga","notif yeay");
             Intent intentNotif = new Intent(context, HomeActivity.class);
             PendingIntent pendingIntent = PendingIntent.getActivity(context, schedule.getId(), intentNotif, PendingIntent.FLAG_UPDATE_CURRENT);
             NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);

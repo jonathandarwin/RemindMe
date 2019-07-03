@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.CompoundButton;
 
 import com.example.remindme.base.BaseAdapter;
 import com.example.remindme.databinding.ListScheduleItemBinding;
@@ -28,7 +29,6 @@ public class HomeAdapter extends BaseAdapter<ListScheduleItemBinding, Schedule> 
     @Override
     public void onBindViewHolder(@NonNull BaseAdapter.ViewHolder viewHolder, final int i) {
         super.onBindViewHolder(viewHolder, i);
-        Log.d("masuksiniga", "description : " + listSchedule.get(i).getDescription() + " id : " + Integer.toString(listSchedule.get(i).getId()));
         ((ListScheduleItemBinding) viewHolder.binding).setViewModel(listSchedule.get(i));
         ((ListScheduleItemBinding) viewHolder.binding).llSchedule.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -36,5 +36,15 @@ public class HomeAdapter extends BaseAdapter<ListScheduleItemBinding, Schedule> 
                 listener.onClick(listSchedule.get(i));
             }
         });
+        ((ListScheduleItemBinding) viewHolder.binding).switchOn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                Schedule schedule = listSchedule.get(i);
+                schedule.setIsOn(isChecked ? 1 : 0);
+                listener.onChange(listSchedule.get(i));
+            }
+        });
     }
+
+
 }

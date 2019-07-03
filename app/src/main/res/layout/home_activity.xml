@@ -10,6 +10,29 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <RelativeLayout
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:padding="15dp"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="RemindMe"
+                android:textColor="@color/colorBlack"
+                android:layout_centerInParent="true"
+                />
+
+        </RelativeLayout>
+
+        <View
+            style="@style/HorizontalDivider"
+            android:layout_below="@+id/toolbar"
+            />
+
         <TextView
             android:id="@+id/no_data"
             android:layout_width="wrap_content"
@@ -24,6 +47,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_above="@id/divider"
+            android:layout_below="@id/toolbar"
             >
 
         </android.support.v7.widget.RecyclerView>

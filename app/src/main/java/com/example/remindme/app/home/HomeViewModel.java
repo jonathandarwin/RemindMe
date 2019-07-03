@@ -20,4 +20,12 @@ public class HomeViewModel extends ViewModel {
     public List<Schedule> getListSchedule(){
         return repo.getListSchedule();
     }
+
+    public boolean updateSchedule(Schedule schedule){
+        return repo.updateSchedule(schedule);
+    }
+
+    public boolean deleteSchedule(int id){
+        return repo.deleteSchedule(id);
+    }
 }
