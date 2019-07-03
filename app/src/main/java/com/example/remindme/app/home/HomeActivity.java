@@ -31,6 +31,11 @@ public class HomeActivity extends BaseActivity<HomeActivityBinding, HomeViewMode
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    protected void setListener() {
+        getBinding().fabAdd.setOnClickListener(this);
         ItemTouchHelper.SimpleCallback itemTouch = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
             @Override
             public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder viewHolder1) {
@@ -44,14 +49,12 @@ public class HomeActivity extends BaseActivity<HomeActivityBinding, HomeViewMode
                 listSchedule.remove(schedule);
                 adapter.notifyItemRemoved(i);
                 adapter.notifyDataSetChanged();
+                if(listSchedule.size() == 0){
+                    getBinding().noData.setVisibility(View.VISIBLE);
+                }
             }
         };
         new ItemTouchHelper(itemTouch).attachToRecyclerView(getBinding().recyclerView);
-    }
-
-    @Override
-    protected void setListener() {
-        getBinding().fabAdd.setOnClickListener(this);
     }
 
     @Override

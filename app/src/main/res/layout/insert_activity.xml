@@ -8,7 +8,7 @@
             type="com.example.remindme.model.Schedule"/>
     </data>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -16,6 +16,7 @@
 
         <!-- TOOLBAR -->
         <RelativeLayout
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="15dp"
@@ -23,8 +24,8 @@
 
             <ImageView
                 android:id="@+id/back"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:src="@drawable/ic_chevron"
                 android:layout_centerVertical="true"
                 />
@@ -34,7 +35,6 @@
                 android:layout_height="wrap_content"
                 android:text="Set Alarm"
                 android:layout_centerInParent="true"
-                android:textSize="17sp"
                 android:textColor="@color/colorBlack"
                 />
 
@@ -51,13 +51,16 @@
         </RelativeLayout>
 
         <View
-            style="@style/HorizontalDivider"/>
+            style="@style/HorizontalDivider"
+            android:layout_below="@id/toolbar"
+            />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:gravity="center"
+            android:layout_centerInParent="true"
             >
 
             <TextView
@@ -105,5 +108,5 @@
 
         </LinearLayout>
 
-    </LinearLayout>
+    </RelativeLayout>
 </layout>
